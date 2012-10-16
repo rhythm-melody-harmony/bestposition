@@ -17,7 +17,7 @@ public class PositionTest {
     @Before
     public void setUp() {
         Tone tone = new Tone(Note.A, 1);
-        position = new Position(tone, 2, 6);
+        position = new Position(tone, 2, 6, 2);
     }
 
     @Test
@@ -25,6 +25,7 @@ public class PositionTest {
         assertEquals(Note.A, position.getTone().getNote());
         assertEquals(2, position.getFret());
         assertEquals(6, position.getString());
+        assertEquals(2, position.getFinger());
     }
     
 }
