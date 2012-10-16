@@ -7,13 +7,11 @@ public class Position {
     private Tone tone;
     private int fret;
     private int string;
-    private int finger;
     
-    public Position(Tone tone, int fret, int string, int finger) {
+    public Position(Tone tone, int fret, int string) {
         this.tone = tone;
         this.fret = fret;
         this.string = string;
-        this.finger = finger;
     }
 
     public Tone getTone() {
@@ -28,8 +26,4 @@ public class Position {
         return string;
     }
 
-    public int getFinger() {
-        return finger;
-    }
-    
 }

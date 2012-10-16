@@ -1,9 +1,7 @@
 package com.rmh.commons;
 
 public enum Note {
-    A("A"), 
-    ASharp("A#"), 
-    B("B"), 
+    
     C("C"), 
     CSharp("C#"), 
     D("D"), 
@@ -12,7 +10,10 @@ public enum Note {
     F("F"), 
     FSharp("F#"), 
     G("G"), 
-    GSharp("G#");
+    GSharp("G#"),
+    A("A"), 
+    ASharp("A#"), 
+    B("B");
     
     private String label;
     
