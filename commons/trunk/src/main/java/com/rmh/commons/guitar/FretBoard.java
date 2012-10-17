@@ -11,6 +11,7 @@ public class FretBoard {
     private int numberOfFrets;
     private int numberOfStrings;
     private Tone[] tuning;
+    private List<Note> naturalScale = buildNaturalScale();
     
     public FretBoard(Map<String, Object> properties) {
         this();
@@ -42,18 +43,20 @@ public class FretBoard {
     
     private Tone createTone(int string, int fret) {
         Tone tuningTone = tuning[string];
-        Note openStringNote = tuningTone.getNote();
-        int openStringOctave = tuningTone.getOctave();
         
-        int noteIncrement = fret % 12;
-        int octaveIncrement = (fret - noteIncrement) / 12;
-        int octave = openStringOctave + octaveIncrement;
+        Note note = tuningTone.getNote();
+        int noteIndex = naturalScale.indexOf(note);
+        int octave = tuningTone.getOctave();
         
-        int noteIndex = openStringNote.ordinal() + noteIncrement;
-        if (noteIndex > 11) {
-            noteIndex = noteIndex - 12;
+        for (int i = 0; i < fret; i++) {
+           noteIndex++;
+           if (noteIndex == 12) {
+               noteIndex = 0;
+               octave++;
+           }
         }
-        Note note = Note.values()[noteIndex];
+        
+        note = naturalScale.get(noteIndex);
         
         Tone tone = new Tone(note, octave);
         
@@ -68,7 +71,7 @@ public class FretBoard {
         
         key = "numberOfStrings";
         if (properties.containsKey(key)) {
-            numberOfFrets = (Integer)properties.get(key);
+            numberOfStrings = (Integer)properties.get(key);
         }
         
         key = "tuning";
@@ -82,17 +85,35 @@ public class FretBoard {
         numberOfStrings = 6;
         tuning = new Tone[6];
         
-        tuning[0] = createTone(Note.E, 1);
-        tuning[1] = createTone(Note.B, 0);
-        tuning[2] = createTone(Note.G, 0);
-        tuning[3] = createTone(Note.D, 0);
-        tuning[4] = createTone(Note.A, -1);
-        tuning[5] = createTone(Note.E, -1);
+        tuning[0] = laodTone(Note.E, 1);
+        tuning[1] = laodTone(Note.B, 0);
+        tuning[2] = laodTone(Note.G, 0);
+        tuning[3] = laodTone(Note.D, 0);
+        tuning[4] = laodTone(Note.A, -1);
+        tuning[5] = laodTone(Note.E, -1);
     }
 
-    private Tone createTone(Note note, int octave) {
+    private Tone laodTone(Note note, int octave) {
         Tone tone = new Tone(note, octave);
-        
         return tone;
+    }
+
+    private List<Note> buildNaturalScale() {
+        List<Note> scale = new ArrayList<Note>();
+        
+        scale.add(Note.C);
+        scale.add(Note.CSharp);
+        scale.add(Note.D);
+        scale.add(Note.DSharp);
+        scale.add(Note.E);
+        scale.add(Note.F);
+        scale.add(Note.FSharp);
+        scale.add(Note.G);
+        scale.add(Note.GSharp);
+        scale.add(Note.A);
+        scale.add(Note.ASharp);
+        scale.add(Note.B);
+        
+        return scale;
     }
 }
