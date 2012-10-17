@@ -22,8 +22,8 @@ public class FretBoard {
         loadDefaultProperties();
     }
     
-    public List<Position> getPositions() {
-        List<Position> positions = new ArrayList<Position>();
+    public List<PositionPoint> getPositions() {
+        List<PositionPoint> positions = new ArrayList<PositionPoint>();
         
         for (int i = 0; i < numberOfStrings; i++) {
             createString(i, positions);
@@ -32,10 +32,10 @@ public class FretBoard {
         return positions;
     }
     
-    private void createString(int string, List<Position> positions) {
+    private void createString(int string, List<PositionPoint> positions) {
         for (int i = 0; i < numberOfFrets+1; i++) {
             Tone tone = createTone(string, i);
-            Position position = new Position(tone, i, string+1);
+            PositionPoint position = new PositionPoint(tone, i, string+1);
             
             positions.add(position);
         }

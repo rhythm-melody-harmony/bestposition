@@ -1,29 +1,23 @@
 package com.rmh.commons.guitar;
 
-import com.rmh.commons.Tone;
+import com.rmh.commons.guitar.PositionPoint;
 
 public class Position {
     
-    private Tone tone;
-    private int fret;
-    private int string;
+    private PositionPoint position;
+    private int finger;
     
-    public Position(Tone tone, int fret, int string) {
-        this.tone = tone;
-        this.fret = fret;
-        this.string = string;
+    public Position(PositionPoint position, int finger) {
+        this.position = position;
+        this.finger = finger;
     }
 
-    public Tone getTone() {
-        return tone;
+    public PositionPoint getPosition() {
+        return position;
     }
 
-    public int getFret() {
-        return fret;
+    public int getFinger() {
+        return finger;
     }
-
-    public int getString() {
-        return string;
-    }
-
+    
 }

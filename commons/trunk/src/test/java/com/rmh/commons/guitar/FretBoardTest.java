@@ -14,7 +14,7 @@ public class FretBoardTest {
     public void testDefaultConstructor() {
         FretBoard fretBoard = new FretBoard();
         
-        List<Position> positions = fretBoard.getPositions();
+        List<PositionPoint> positions = fretBoard.getPositions();
         
         int expectedSize = 6*22;
         assertEquals(expectedSize, positions.size());
@@ -36,7 +36,7 @@ public class FretBoardTest {
         
         FretBoard fretBoard = new FretBoard(properties);
         
-        List<Position> positions = fretBoard.getPositions();
+        List<PositionPoint> positions = fretBoard.getPositions();
         
         int expectedSize = 6*18;
         assertEquals(expectedSize, positions.size());
