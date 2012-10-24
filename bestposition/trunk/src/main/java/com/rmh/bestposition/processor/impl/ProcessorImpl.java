@@ -15,7 +15,6 @@ public class ProcessorImpl implements Processor {
         this.fretBoard = fretBoard;
     }
 
-    @Override
     public List<List<Position>> run(List<Tone> phrase) {
         List<List<Position>> positionsList = new ArrayList<List<Position>>();
         
