@@ -1,7 +1,5 @@
 package com.rmh.commons.guitar;
 
-import com.rmh.commons.guitar.PositionPoint;
-
 public class Position {
     
     private PositionPoint position;

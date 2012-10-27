@@ -26,4 +26,15 @@ public enum Note {
     public String toString() {
         return label;
     }
+    
+    public static Note fromString(String label) {
+        
+        for (Note note : Note.values()) {
+            if (note.label.equals(label)) {
+                return note;
+            }
+        }
+        
+        return null;
+    }
 }
