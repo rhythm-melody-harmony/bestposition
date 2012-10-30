@@ -118,12 +118,14 @@ public class TestDijkstraAlgorithm {
           addLane("Edge_0"+m,0,nodes.indexOf(new ToneVertex("Node0-"+m,PositionLevel[0][m])),0);
       for(int i=0;i<PositionLevel.length;i++){
             for(int j=0;j<PositionLevel[i].length;j++){
-               for(int k=0;k<PositionLevel[i].length;k++){
+               if((i+1)<PositionLevel.length){ 
+               for(int k=0;k<PositionLevel[i+1].length;k++){
                    if(i!=PositionLevel.length-1){
                         int s=i+1;
                         addLane("Edge_"+i+"_"+j+"_"+k, nodes.indexOf(new ToneVertex("Node"+i+"-"+j,PositionLevel[i][j])), nodes.indexOf(new ToneVertex("Node"+s+"-"+k, PositionLevel[s][k])), calculateWeight(Fret[i][j],Fret[s][k],String[i][j],String[s][k],Finger[i][j],Finger[s][k]));  
                    }
                }
+            }
             }
       }
       for(int m=0;m<PositionLevel[PositionLevel.length-1].length;m++)
