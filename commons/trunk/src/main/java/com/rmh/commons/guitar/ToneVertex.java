@@ -35,19 +35,11 @@ public class ToneVertex {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    ToneVertex other = (ToneVertex) obj;
-    if (id == null) {
-      if (other.id != null)
+      ToneVertex other = (ToneVertex) obj;
+    if (this.toString().equals(other.toString()) && this.getId().equals(other.getId()))
+        return true;
+    else
         return false;
-    } else if (!id.equals(other.id))
-      return false;
-    return true;
   }
 
   @Override
