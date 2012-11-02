@@ -32,7 +32,7 @@ public class PhrasePositionsFinder {
         return positions;
     }
 
-    private List<Position> findTonePositions(Tone tone) {
+    public List<Position> findTonePositions(Tone tone) {
         List<Position> positions = new ArrayList<Position>();
         
         for (PositionPoint positionPoint : fretBoard) {
