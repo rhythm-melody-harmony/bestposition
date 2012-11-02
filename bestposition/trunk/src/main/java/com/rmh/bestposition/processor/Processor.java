@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface Processor {
     
-    public List<List<Position>> run(List<Tone> phrase);
+    public List<Position> run(List<Tone> phrase);
     
 }
