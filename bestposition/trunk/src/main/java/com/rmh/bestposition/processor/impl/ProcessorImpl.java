@@ -86,7 +86,11 @@ public class ProcessorImpl implements Processor {
         LinkedList<ToneVertex> path = dijkstra.getPath(nodes.get(nodes.size() - 1));
         path.removeLast();
         path.removeFirst();
-        List<Position> PositionList = new ArrayList<Position>(map.values());
+        List<Position> PositionList = new ArrayList<Position>();
+        
+        for (ToneVertex vertex : path) { 
+            PositionList.add((Position)map.get(vertex.getName()));
+        }
         return PositionList;
     }
     
