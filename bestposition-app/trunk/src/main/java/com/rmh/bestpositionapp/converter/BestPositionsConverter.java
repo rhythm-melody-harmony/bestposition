@@ -6,13 +6,13 @@ import java.util.List;
 
 public class BestPositionsConverter {
     
-    public List<String> convert(List<List<Position>> positionsList) {
+    public List<String> convert(List<Position> positionsList) {
         List<String> result = new ArrayList<String>();
         
-        for (List<Position> positions : positionsList) {
-            String line = convertLine(positions);
+      //  for (List<Position> positions : positionsList) {
+            String line = convertLine(positionsList);
             result.add(line);
-        }
+       // }
         
         return result;
     }
