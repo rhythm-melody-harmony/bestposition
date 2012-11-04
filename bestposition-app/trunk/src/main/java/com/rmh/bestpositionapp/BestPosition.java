@@ -9,7 +9,10 @@ import com.rmh.commons.Tone;
 import com.rmh.commons.guitar.FretBoard;
 import com.rmh.commons.guitar.Position;
 import com.rmh.commons.guitar.PositionPoint;
+import com.rmh.commons.guitar.ToneEdge;
+import com.rmh.commons.guitar.ToneVertex;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BestPosition {
@@ -18,12 +21,11 @@ public class BestPosition {
         
         PhraseConverter phraseConverter = new PhraseConverter();
         List<Tone> phrase = phraseConverter.convert(source);
-        
-        FretBoard fretBoard = new FretBoard();
-        List<PositionPoint> fretBoardPositionPoints = fretBoard.getPositions();
-        
-        Processor processor = new ProcessorImpl(fretBoardPositionPoints);
-        List<List<Position>> bestPositions = processor.run(phrase);
+        List<PositionPoint> fretBoard = (new FretBoard()).getPositions();
+        List<ToneVertex> nodes = new ArrayList<ToneVertex>();
+        List<ToneEdge> edges = new ArrayList<ToneEdge>();
+        Processor processor = new ProcessorImpl(fretBoard, nodes, edges);
+        List<Position> bestPositions = processor.run(phrase);
         
         BestPositionsConverter bestPositionsConverter = new BestPositionsConverter();
         List<String> result = bestPositionsConverter.convert(bestPositions);
