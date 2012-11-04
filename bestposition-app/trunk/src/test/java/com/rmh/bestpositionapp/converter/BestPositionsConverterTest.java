@@ -14,12 +14,12 @@ public class BestPositionsConverterTest {
     @Test
     public void testConvert() {
         BestPositionsConverter bestPositionsConverter = new BestPositionsConverter();
-        List<List<Position>> positionsList = buildPositionsList();
+        List<Position> positionsList = buildPositions();
         
         List<String> convertedList = bestPositionsConverter.convert(positionsList);
         
         assertNotNull(convertedList);
-        assertEquals(2, convertedList.size());
+        assertEquals(1, convertedList.size());
         assertEquals("1/6/1, 3/6/3", convertedList.get(0));
     }
 
