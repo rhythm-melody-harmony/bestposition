@@ -26,6 +26,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,75 +79,77 @@ public class TestDijkstraAlgorithm {
     
   }
   @Test
-  public void testFindBestPosition(){
-      nodes = new ArrayList<ToneVertex>();
-      edges = new ArrayList<ToneEdge>();
-      List<Tone> phrase = DataBuilder.buildTestPhrase();
-      List<PositionPoint> fretBoard = (new FretBoard()).getPositions();
+  public void testFindBestPosition() {
+        nodes = new ArrayList<ToneVertex>();
+        edges = new ArrayList<ToneEdge>();
+        FretBoard fret1 = new FretBoard();
+        Map map = new HashMap();
+        List<Tone> phrase = DataBuilder.buildTestPhrase();
+        List<PositionPoint> fretBoard = (new FretBoard()).getPositions();
         boolean useThumbFinger = false;
         boolean useOpenStrings = false;
         PhrasePositionsFinder phrasePositionsFinder = new PhrasePositionsFinder(fretBoard, useThumbFinger, useOpenStrings);
         //List<Position> positions = phrasePositionsFinder.findPositions(phrase);
-        String PositionLevel [][]=new String[phrase.size()][];
-        int Fret[][]=new int[phrase.size()][];
-        int String[][]=new int[phrase.size()][];
-        int Finger[][]=new int[phrase.size()][];
-        for(int i=0;i<phrase.size();i++){
+        String PositionLevel[][] = new String[phrase.size()][];
+        int Fret[][] = new int[phrase.size()][];
+        int String[][] = new int[phrase.size()][];
+        int Finger[][] = new int[phrase.size()][];
+        for (int i = 0; i < phrase.size(); i++) {
             List<Position> TonePositions = phrasePositionsFinder.findTonePositions(phrase.get(i));
-            PositionLevel[i]=new String[TonePositions.size()];
-            Fret[i]=new int[TonePositions.size()];
-            String[i]=new int[TonePositions.size()];
-            Finger[i]=new int[TonePositions.size()];
-         
-            for(int j=0;j<TonePositions.size();j++){
-                PositionLevel[i][j]= TonePositions.get(j).toString();
-                Fret[i][j]= TonePositions.get(j).getPosition().getFret();
-                String[i][j]= TonePositions.get(j).getPosition().getString();
-                Finger[i][j]= TonePositions.get(j).getFinger();
+            PositionLevel[i] = new String[TonePositions.size()];
+            Fret[i] = new int[TonePositions.size()];
+            String[i] = new int[TonePositions.size()];
+            Finger[i] = new int[TonePositions.size()];
+
+            for (int j = 0; j < TonePositions.size(); j++) {
+                PositionLevel[i][j] = TonePositions.get(j).toString();
+                Fret[i][j] = TonePositions.get(j).getPosition().getFret();
+                String[i][j] = TonePositions.get(j).getPosition().getString();
+                Finger[i][j] = TonePositions.get(j).getFinger();
+                map.put(PositionLevel[i][j], TonePositions.get(j));
             }
         }
-        ToneVertex nodeBegin = new ToneVertex("Node_begin","Node_begin");
+        ToneVertex nodeBegin = new ToneVertex("Node_begin", "Node_begin");
         nodes.add(nodeBegin);
-        for(int i=0;i<PositionLevel.length;i++){
-            for(int j=0;j<PositionLevel[i].length;j++){
-            ToneVertex node = new ToneVertex("Node"+i+"-"+j,PositionLevel[i][j]);
-            nodes.add(node);
+        for (int i = 0; i < PositionLevel.length; i++) {
+            for (int j = 0; j < PositionLevel[i].length; j++) {
+                ToneVertex node = new ToneVertex("Node" + i + "-" + j, PositionLevel[i][j]);
+                nodes.add(node);
+            }
         }
-        }
-        ToneVertex nodeEnd = new ToneVertex("Node_end","Node_end");
+        ToneVertex nodeEnd = new ToneVertex("Node_end", "Node_end");
         nodes.add(nodeEnd);
-      for(int m=0;m<PositionLevel[0].length;m++)
-          addLane("Edge_0"+m,0,nodes.indexOf(new ToneVertex("Node0-"+m,PositionLevel[0][m])),0);
-      for(int i=0;i<PositionLevel.length;i++){
-            for(int j=0;j<PositionLevel[i].length;j++){
-               if((i+1)<PositionLevel.length){ 
-               for(int k=0;k<PositionLevel[i+1].length;k++){
-                   if(i!=PositionLevel.length-1){
-                        int s=i+1;
-                        addLane("Edge_"+i+"_"+j+"_"+k, nodes.indexOf(new ToneVertex("Node"+i+"-"+j,PositionLevel[i][j])), nodes.indexOf(new ToneVertex("Node"+s+"-"+k, PositionLevel[s][k])), calculateWeight(Fret[i][j],Fret[s][k],String[i][j],String[s][k],Finger[i][j],Finger[s][k]));  
-                   }
-               }
-            }
-            }
-      }
-      for(int m=0;m<PositionLevel[PositionLevel.length-1].length;m++)
-          addLane("Edge_"+(PositionLevel.length-1)+"_"+m, nodes.indexOf(new ToneVertex("Node"+(PositionLevel.length-1)+"-"+m,PositionLevel[PositionLevel.length-1][m])),nodes.size()-1,0);
-      PhraseGraph graph = new PhraseGraph(nodes, edges);
-      DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
-      dijkstra.execute(nodes.get(0));
-      LinkedList<ToneVertex> path = dijkstra.getPath(nodes.get(nodes.size()-1));
-      
-       for(ToneEdge edge:edges)
-       {
-           System.out.println(edge.toString());
-       }
-                   for(ToneVertex vertex:path){
-                        System.out.println(vertex.toString());
+        for (int m = 0; m < PositionLevel[0].length; m++) {
+            addLane("Edge_0" + m, 0, nodes.indexOf(new ToneVertex("Node0-" + m, PositionLevel[0][m])), 0);
+        }
+        for (int i = 0; i < PositionLevel.length; i++) {
+            for (int j = 0; j < PositionLevel[i].length; j++) {
+                if ((i + 1) < PositionLevel.length) {
+                    for (int k = 0; k < PositionLevel[i + 1].length; k++) {
+                        if (i != PositionLevel.length - 1) {
+                            int s = i + 1;
+                            addLane("Edge_" + i + "_" + j + "_" + k, nodes.indexOf(new ToneVertex("Node" + i + "-" + j, PositionLevel[i][j])), nodes.indexOf(new ToneVertex("Node" + s + "-" + k, PositionLevel[s][k])), calculateWeight(Fret[i][j], Fret[s][k], String[i][j], String[s][k], Finger[i][j], Finger[s][k]));
+                        }
                     }
-                    
-       
+                }
+            }
+        }
+        for (int m = 0; m < PositionLevel[PositionLevel.length - 1].length; m++) {
+            addLane("Edge_" + (PositionLevel.length - 1) + "_" + m, nodes.indexOf(new ToneVertex("Node" + (PositionLevel.length - 1) + "-" + m, PositionLevel[PositionLevel.length - 1][m])), nodes.size() - 1, 0);
+        }
+        PhraseGraph graph = new PhraseGraph(nodes, edges);
+        DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
+        dijkstra.execute(nodes.get(0));
+        LinkedList<ToneVertex> path = dijkstra.getPath(nodes.get(nodes.size() - 1));
+        path.removeFirst();
+        path.removeLast();
+        for (ToneVertex vertex : path) {
+            System.out.println(map.get(vertex.toString()));
+        }
+
+
         assertNotNull(PositionLevel);
-  }
+    }
   private void addLane(String laneId, int sourceLocNo, int destLocNo,
       int duration) {
     ToneEdge lane = new ToneEdge(laneId,nodes.get(sourceLocNo), nodes.get(destLocNo), duration);
