@@ -28,7 +28,7 @@ public class ProcessorImpl implements Processor {
     public List<Position> run(List<Tone> phrase) {
 //        List<List<Position>> positionsList = new ArrayList<List<Position>>();
 //        return positionsList;
-        Map map = new HashMap();
+        Map PositionMap = new HashMap();
         boolean useThumbFinger = false;
         boolean useOpenStrings = false;
         PhrasePositionsFinder phrasePositionsFinder = new PhrasePositionsFinder(fretBoard, useThumbFinger, useOpenStrings);
@@ -49,7 +49,7 @@ public class ProcessorImpl implements Processor {
                 Fret[i][j] = TonePositions.get(j).getPosition().getFret();
                 String[i][j] = TonePositions.get(j).getPosition().getString();
                 Finger[i][j] = TonePositions.get(j).getFinger();
-                map.put(PositionLevel[i][j], TonePositions.get(j));
+                PositionMap.put(PositionLevel[i][j], TonePositions.get(j));
             }
         }
         ToneVertex nodeBegin = new ToneVertex("Node_begin", "Node_begin");
@@ -89,7 +89,7 @@ public class ProcessorImpl implements Processor {
         List<Position> PositionList = new ArrayList<Position>();
         
         for (ToneVertex vertex : path) { 
-            PositionList.add((Position)map.get(vertex.getName()));
+            PositionList.add((Position)PositionMap.get(vertex.getName()));
         }
         return PositionList;
     }
